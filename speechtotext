@@ -1,0 +1,57 @@
+import speech_recognition as sr
+import pyttsx3
+
+def analyze_command(text):
+    # Convertir le texte en minuscules pour faciliter la manipulation
+    text = text.lower()
+
+    # Définir les mots clés associés à chaque commande de mouvement
+    keywords = {
+        "avancer": ["avance", "avancer", "avancez", "aller en avant"],
+        "reculer": ["recule", "reculer", "reculez", "aller en arrière"],
+        "droite": ["droite", "à droite", "tourne à droite"],
+        "gauche": ["gauche", "à gauche", "tourne à gauche"],
+        "stop": ["stop", "arrêt"]
+    }
+
+    # Parcourir les mots clés et identifier la commande de mouvement
+    for command, key_list in keywords.items():
+        for key in key_list:
+            if key in text:
+                return command
+
+    # Si aucun mot clé n'est trouvé, retourner "stop" par défaut
+    return "stop"
+
+def transcribe_and_interpret():
+    recognizer = sr.Recognizer()
+
+    # Utiliser le microphone comme source audio
+    with sr.Microphone() as source:
+        print("Parlez maintenant...")
+        recognizer.adjust_for_ambient_noise(source)  # Ajuster le niveau de bruit du microphone
+        audio_data = recognizer.listen(source)  # Capturer l'audio en temps réel
+
+    try:
+        # Transcrire l'audio en texte
+        text = recognizer.recognize_google(audio_data, language="fr-FR")
+        print("Transcription: ", text)
+
+        # Interpréter la commande à partir du texte transcrit
+        command = analyze_command(text)
+        if command == "stop":
+            print("Le robot s'arrête.")
+        else:
+            print("Le robot dit: Oui, je vais", command)
+            # Utiliser pyttsx3 pour parler à haute voix
+            engine = pyttsx3.init()
+            engine.say("Oui, je vais " + command)
+            engine.runAndWait()
+
+    except sr.UnknownValueError:
+        print("Impossible de comprendre l'audio")
+    except sr.RequestError as e:
+        print("Erreur lors de la reconnaissance vocale: ", e)
+
+# Appeler la fonction pour transcrire le discours en direct et interpréter les commandes
+transcribe_and_interpret()
