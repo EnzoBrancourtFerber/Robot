@@ -1,38 +1,58 @@
-# Définition des fonctions de contrôle des moteurs (simulation)
+from gpiozero import Motor, OutputDevice
+import time
+
+# Configuration des broches GPIO pour les moteurs
+PIN_MOTEUR_DROIT_AVANT = 17
+PIN_MOTEUR_DROIT_ARRIERE = 18
+PIN_MOTEUR_GAUCHE_AVANT = 19
+PIN_MOTEUR_GAUCHE_ARRIERE = 20
+
+# Initialisation des moteurs
+moteur_droit = Motor(forward=PIN_MOTEUR_DROIT_AVANT, backward=PIN_MOTEUR_DROIT_ARRIERE)
+moteur_gauche = Motor(forward=PIN_MOTEUR_GAUCHE_AVANT, backward=PIN_MOTEUR_GAUCHE_ARRIERE)
+
+# Fonction pour avancer
 def avancer():
-    return "Simulation : Avancer"
+    moteur_droit.forward()
+    moteur_gauche.forward()
 
+# Fonction pour reculer
 def reculer():
-    return "Simulation : Reculer"
+    moteur_droit.backward()
+    moteur_gauche.backward()
 
+# Fonction pour tourner à droite
 def tourner_droite():
-    return "Simulation : Tourner à droite"
+    moteur_droit.forward()
+    moteur_gauche.backward()
 
+# Fonction pour tourner à gauche
 def tourner_gauche():
-    return "Simulation : Tourner à gauche"
+    moteur_droit.backward()
+    moteur_gauche.forward()
 
+# Fonction pour arrêter
 def stop():
-    return "Simulation : Stop"
+    moteur_droit.stop()
+    moteur_gauche.stop()
 
 # Fonction pour exécuter la commande appropriée en fonction de la direction spécifiée
 def executer_commande(direction):
     if direction == "avancer":
-        return avancer()
+        avancer()
     elif direction == "reculer":
-        return reculer()
+        reculer()
     elif direction == "droite":
-        return tourner_droite()
+        tourner_droite()
     elif direction == "gauche":
-        return tourner_gauche()
+        tourner_gauche()
     elif direction == "stop":
-        return stop()
+        stop()
     else:
-        return "Commande non reconnue"
+        print("Commande non reconnue")
 
-# Appels de fonctions de contrôle des moteurs (simulation) lorsqu'elles sont appelées directement
+# Appels de fonctions de contrôle des moteurs lorsqu'elles sont appelées directement
 if __name__ == "__main__":
-    print(executer_commande("avancer"))
-    print(executer_commande("reculer"))
-    print(executer_commande("droite"))
-    print(executer_commande("gauche"))
-    print(executer_commande("stop"))
+    executer_commande("avancer")
+    time.sleep(2)
+    executer_commande("stop")
