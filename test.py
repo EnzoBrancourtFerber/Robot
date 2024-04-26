@@ -48,3 +48,5 @@ def stop():
     GPIO.output(ENB, GPIO.LOW)
     pwm_a.stop()
     pwm_b.stop()
+
+GPIO.cleanup() # cleanup all GPIO 
