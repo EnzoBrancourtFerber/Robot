@@ -1,4 +1,10 @@
-= 17  # PWM pour la vitesse du moteur A
+import RPi.GPIO as GPIO
+import time
+import socket
+
+# Définition des broches GPIO
+# Modifier les numéros de broches en fonction de votre configuration matérielle
+ENA = 17  # PWM pour la vitesse du moteur A
 IN1 = 27  # Contrôle de direction du moteur A
 IN2 = 22  # Contrôle de direction du moteur A
 ENB = 18  # PWM pour la vitesse du moteur B
