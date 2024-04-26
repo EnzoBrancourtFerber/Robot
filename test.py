@@ -46,4 +46,6 @@ def stop():
     GPIO.output(ENB, GPIO.LOW)
     pwm_a.stop()
     pwm_b.stop()
-
+    
+if __name__ == "__main__":
+    drive_forward()
