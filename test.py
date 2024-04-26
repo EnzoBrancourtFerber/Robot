@@ -1,10 +1,4 @@
-import RPi.GPIO as GPIO
-import time
-import socket
-
-# Définition des broches GPIO
-# Modifier les numéros de broches en fonction de votre configuration matérielle
-ENA = 17  # PWM pour la vitesse du moteur A
+= 17  # PWM pour la vitesse du moteur A
 IN1 = 27  # Contrôle de direction du moteur A
 IN2 = 22  # Contrôle de direction du moteur A
 ENB = 18  # PWM pour la vitesse du moteur B
@@ -31,3 +25,18 @@ GPIO.setup(echo_pin, GPIO.IN)
 # Initialisation des PWM pour le contrôle de vitesse
 pwm_a = GPIO.PWM(ENA, 100)
 pwm_b = GPIO.PWM(ENB, 100)
+
+# Utilisation des fonctions
+def drive_forward():
+    GPIO.output(IN1, GPIO.HIGH)
+    GPIO.output(IN2, GPIO.LOW)
+    GPIO.output(IN3, GPIO.LOW)
+    GPIO.output(IN4, GPIO.HIGH)
+    pwm_a.start(100)
+    pwm_b.start(100)
+
+def stop():
+    GPIO.output(ENA, GPIO.LOW)
+    GPIO.output(ENB, GPIO.LOW)
+    pwm_a.stop()
+    pwm_b.stop()
