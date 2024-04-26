@@ -2,8 +2,6 @@ import RPi.GPIO as GPIO
 import time
 import socket
 
-GPIO.cleanup() # cleanup all GPIO 
-
 # Définition des broches GPIO
 # Modifier les numéros de broches en fonction de votre configuration matérielle
 ENA = 17  # PWM pour la vitesse du moteur A
@@ -49,4 +47,3 @@ def stop():
     pwm_a.stop()
     pwm_b.stop()
 
-GPIO.cleanup() # cleanup all GPIO 
